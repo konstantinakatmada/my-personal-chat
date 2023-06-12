@@ -11,12 +11,10 @@ def index():
     if request.method == "POST":
         message = request.form.get("message")
         timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        app.logger.info("Received message: %s", message)
-        app.logger.info("Timestamp: %s", timestamp)
-        messages.append(message)
+        messages.append((message,timestamp))
     
     name = 'You yourself'
-    user_message = messages[-1] if len(messages) != 0 else "No messages yet"
+    user_message = messages[-1][0] if len(messages) != 0 else "No messages yet"
 
 
     html = """
@@ -64,12 +62,6 @@ def index():
                   color: #fff;
                 }
 
-                /* Bot message */
-                .bot-message .message-content {
-                  background-color: #5cb85c;
-                  color: #fff;
-                }
-
                 /* Input area */
                 .input-area {
                   margin-top: 20px;
@@ -92,6 +84,20 @@ def index():
                   border-radius: 5px;
                   cursor: pointer;
                   font-size: 16px;
+
+                 /* Messages list */
+                .messages-list {
+                  margin-top: 20px;
+                  background-color: #e9e9e9;
+                  padding: 10px;
+                  border-radius: 5px;
+                }
+
+                /* Timestamp */
+                .timestamp {
+                  font-size: 12px;
+                  color: #999;
+                  margin-top: 5px;
                 }
             </style>
         </head>
@@ -100,18 +106,20 @@ def index():
             <div class="messages-list">
                     <h2 class="title">Scroll up for previous messages</h2>
                     <ul style="list-style-type: none; padding: 0; margin:0;">
-                        {% for msg in messages %}
+                        {% for msg,ts in messages %}
                         <li class="chat-message user-message">
                         <div class="message-content">
                         <p>{{ msg }}</p>
+                        <p class="timestamp">{{ ts}}</p>
                         </div>
                         </li>
                         {% endfor %}
                     </ul>
                 </div>  
-                <div class="chat-message bot-message">
+                <div class="chat-message user-message">
                     <div class="message-content">
-                        <p>Bot message content goes here</p>
+                        <p>{{ message }}</p>
+                        <p class="timestamp">{{ timestamp }}</p>
                     </div>
                 </div>
                 <form class="input-area" action ="/" method= "POST">
