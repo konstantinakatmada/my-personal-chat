@@ -1,4 +1,3 @@
-import logging
 from flask import Flask, render_template_string, request
 from datetime import datetime
 
@@ -6,7 +5,6 @@ app = Flask(__name__)
 
 messages = []
 
-logging.basicConfig(level=logging.DEBUG)
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
@@ -89,12 +87,20 @@ def index():
                 }
             </style>
         </head>
-        <body>
+        <body> 
             <div class="chat-container">
-                <div class="chat-message user-message">
-                    <div class="message-content">
-                        <p>{{message}}</p>
-                    </div>
+            <div class="messages-list">
+                    <h2>Scroll up for previous messages</h2>
+                    <ul style="list-style-type: none; padding: 0; margin:0;">
+                        {% for msg in messages %}
+                        <li class="chat-message user-message">
+                        <div class="message-content">
+                        <p>{{ msg }}</p>
+                        </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>  
                 </div>
                 <div class="chat-message bot-message">
                     <div class="message-content">
@@ -105,20 +111,11 @@ def index():
                     <input type="text" name='message' placeholder="Type your message...">
                     <input type="submit" value="Send">
                 </form>
-                <div class="messages-list">
-                    <h2>My past messages:</h2>
-                    <ul>
-                        {% for msg in messages %}
-                        <li>{{ msg }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>   
             </div>
         </body>
     </html>
     """
     print("Messages:", messages)
-    app.logger.info("Messages: %s", messages)
     return render_template_string(html, name=name, message=user_message, messages=messages) 
 
 
