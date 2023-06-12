@@ -13,9 +13,9 @@ def index():
         print("Received message:", message)
         print("Timestamp:", timestamp)
         messages.append(message)
-
+    
     name = 'You yourself'
-    user_message = request.form.get("message", "")
+    user_message = messages[-1] if len(messages) != 0 else "No messages yet"
 
 
     html = """
@@ -106,10 +106,10 @@ def index():
         </body>
     </html>
     """
+    print("messages", messages)
     return render_template_string(html, name=name, message=user_message) 
 
 
 if __name__ == "__main__":
     app.run(debug=True)
-
 
