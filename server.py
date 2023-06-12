@@ -84,6 +84,7 @@ def index():
                   border-radius: 5px;
                   cursor: pointer;
                   font-size: 16px;
+                }
 
                  /* Messages list */
                 .messages-list {
@@ -99,6 +100,46 @@ def index():
                   color: #999;
                   margin-top: 5px;
                 }
+
+                /* Scrollbar */
+                ::-webkit-scrollbar {
+                    width: 5px;
+                }   
+
+                ::-webkit-scrollbar-track { 
+                    background-color: #f1f1f1;
+                }
+
+                ::-webkit-scrollbar-thumb {
+                    background-color: #888;
+                }
+
+
+                ::-webkit-scrollbar-thumb:hover {
+                    background: #555;
+                }
+
+                @keyframes rainbow {
+                 0% { background-color: red; }
+                 14% { background-color: orange; }
+                 28% { background-color: yellow; }
+                 42% { background-color: green; }
+                 57% { background-color: blue; }
+                 71% { background-color: indigo; }
+                 85% { background-color: violet; }
+                 100% { background-color: red; }
+                 }
+
+                 #current-message {
+                 animation: rainbow 8s linear infinite;
+                 color: #fff;
+                 background-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet, red);
+                 background-size: 800% 100%;
+                 -webkit-animation: rainbow 8s linear infinite;
+                 -moz-animation: rainbow 8s linear infinite;
+                 animation: rainbow 8s linear infinite;
+                 }
+
             </style>
         </head>
         <body> 
@@ -116,10 +157,10 @@ def index():
                         {% endfor %}
                     </ul>
                 </div>  
-                <div class="chat-message user-message">
+                <div class="chat-message user-message" id="current-message">
                     <div class="message-content">
                         <p>{{ message }}</p>
-                        <p class="timestamp">{{ timestamp }}</p>
+                        <p class="timestamp">{{ ts }}</p>
                     </div>
                 </div>
                 <form class="input-area" action ="/" method= "POST">
