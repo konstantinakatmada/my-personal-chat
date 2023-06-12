@@ -1,3 +1,4 @@
+import logging
 from flask import Flask, render_template_string, request
 from datetime import datetime
 
@@ -5,13 +6,15 @@ app = Flask(__name__)
 
 messages = []
 
+logging.basicConfig(level=logging.DEBUG)
+
 @app.route("/", methods=['GET', 'POST'])
 def index():
     if request.method == "POST":
         message = request.form.get("message")
         timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        print("Received message:", message)
-        print("Timestamp:", timestamp)
+        app.logger.info("Received message: %s", message)
+        app.logger.info("Timestamp: %s", timestamp)
         messages.append(message)
     
     name = 'You yourself'
@@ -102,12 +105,21 @@ def index():
                     <input type="text" name='message' placeholder="Type your message...">
                     <input type="submit" value="Send">
                 </form>
+                <div class="messages-list">
+                    <h2>My past messages:</h2>
+                    <ul>
+                        {% for msg in messages %}
+                        <li>{{ msg }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>   
             </div>
         </body>
     </html>
     """
-    print("messages", messages)
-    return render_template_string(html, name=name, message=user_message) 
+    print("Messages:", messages)
+    app.logger.info("Messages: %s", messages)
+    return render_template_string(html, name=name, message=user_message, messages=messages) 
 
 
 if __name__ == "__main__":
