@@ -1,19 +1,32 @@
-from flask import Flask, render_template_string
+from flask import Flask, render_template_string, request
+from datetime import datetime
 
 app = Flask(__name__)
 
-@app.route("/")
+messages = []
+
+@app.route("/", methods=['GET', 'POST'])
 def index():
+    if request.method == "POST":
+        message = request.form.get("message")
+        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        print("Received message:", message)
+        print("Timestamp:", timestamp)
+        messages.append(message)
+
     name = 'You yourself'
+    user_message = request.form.get("message", "")
+
+
     html = """
-    <html>
+   <!DOCTYPE html>
         <head>
             <title>My Personal Chat</title>
             <style>
                 /* Chat container */
                 .chat-container {
                   width: 100%;
-                  max-width: 600px;
+                  max-width: 800px;
                   margin: 0 auto;
                   padding: 20px;
                   background-color: #f7f7f7;
@@ -77,7 +90,7 @@ def index():
             <div class="chat-container">
                 <div class="chat-message user-message">
                     <div class="message-content">
-                        <p>User message content goes here</p>
+                        <p>{{message}}</p>
                     </div>
                 </div>
                 <div class="chat-message bot-message">
@@ -85,17 +98,18 @@ def index():
                         <p>Bot message content goes here</p>
                     </div>
                 </div>
-                <div class="input-area">
-                    <input type="text" placeholder="Type your message...">
+                <form class="input-area" action ="/" method= "POST">
+                    <input type="text" name='message' placeholder="Type your message...">
                     <input type="submit" value="Send">
-                </div>
+                </form>
             </div>
         </body>
     </html>
     """
-    return render_template_string(html, name=name)
+    return render_template_string(html, name=name, message=user_message) 
+
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
 
 
