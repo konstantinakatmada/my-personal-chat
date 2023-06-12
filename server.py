@@ -35,6 +35,14 @@ def index():
                   border-radius: 5px;
                 }
 
+                h2.title {
+                background-color: #f7f7f7;
+                color: #333;
+                padding: 10px;
+                border-radius: 5px;
+                margin-top: 20px;
+                }
+
                 /* Chat messages */
                 .chat-message {
                   margin-bottom: 10px;
@@ -90,7 +98,7 @@ def index():
         <body> 
             <div class="chat-container">
             <div class="messages-list">
-                    <h2>Scroll up for previous messages</h2>
+                    <h2 class="title">Scroll up for previous messages</h2>
                     <ul style="list-style-type: none; padding: 0; margin:0;">
                         {% for msg in messages %}
                         <li class="chat-message user-message">
@@ -101,7 +109,6 @@ def index():
                         {% endfor %}
                     </ul>
                 </div>  
-                </div>
                 <div class="chat-message bot-message">
                     <div class="message-content">
                         <p>Bot message content goes here</p>
