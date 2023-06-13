@@ -35,7 +35,8 @@ def index():
 
                 h2.title {
                 background-color: #f7f7f7;
-                color: #333;
+                color: #4267B2;
+                outline: 1px solid #4267B2;
                 padding: 10px;
                 border-radius: 5px;
                 margin-top: 20px;
@@ -47,7 +48,6 @@ def index():
                 }
 
                 .chat-message .message-content {
-                  background-color: #fff;
                   padding: 10px;
                   border-radius: 5px;
                 }
@@ -94,11 +94,19 @@ def index():
                   border-radius: 5px;
                 }
 
+                /* Current message and form*/
+                .current-container {
+                  margin-top: 20px;
+                  background-color: #e9e9e9;
+                  padding: 10px;
+                  border-radius: 5px;
+                }
+
                 /* Timestamp */
                 .timestamp {
                   font-size: 12px;
-                  color: #999;
-                  margin-top: 5px;
+                  color: #ECB22E;
+                   padding-top: 2px;
                 }
 
                 /* Scrollbar */
@@ -131,13 +139,16 @@ def index():
                  }
 
                  #current-message {
-                 animation: rainbow 8s linear infinite;
-                 color: #fff;
-                 background-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet, red);
-                 background-size: 800% 100%;
-                 -webkit-animation: rainbow 8s linear infinite;
-                 -moz-animation: rainbow 8s linear infinite;
-                 animation: rainbow 8s linear infinite;
+                 padding: 10px;
+                 margin-left: 10px;
+                 margin-right: 10px;
+                 border-radius: 7px; 
+                 border: none;
+                 color:  #fff;
+                 font-weight: bold;
+                 text-shadow: 0px 0px 5px #000;
+                 background-image: linear-gradient(to right, rgba(255, 0, 0, 0.3), rgba(255, 165, 0, 0.3), rgba(255, 255, 0, 0.3), rgba(0, 128, 0, 0.3), rgba(0, 0, 255, 0.3), rgba(75, 0, 130, 0.3), rgba(238, 130, 238, 0.3), rgba(255, 0, 0, 0.3));
+                 background-size: 100% 100%;
                  }
 
             </style>
@@ -157,13 +168,13 @@ def index():
                         {% endfor %}
                     </ul>
                 </div>  
-                <div class="chat-message user-message" id="current-message">
+                <div class="chat-message current-container" id="current-message">
                     <div class="message-content">
                         <p>{{ message }}</p>
                         <p class="timestamp">{{ ts }}</p>
                     </div>
                 </div>
-                <form class="input-area" action ="/" method= "POST">
+                <form class="input-area current-container" action ="/" method= "POST">
                     <input type="text" name='message' placeholder="Type your message...">
                     <input type="submit" value="Send">
                 </form>
