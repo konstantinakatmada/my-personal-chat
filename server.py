@@ -14,7 +14,7 @@ def index():
         messages.append((message,timestamp))
     
     name = 'You yourself'
-    user_message = messages[-1][0] if len(messages) != 0 else "No messages yet"
+    user_message = "Type here..." if len(messages) != 0 else "No messages yet"
 
 
     html = """
@@ -168,22 +168,15 @@ def index():
                         {% endfor %}
                     </ul>
                 </div>  
-                <div class="chat-message current-container" id="current-message">
-                    <div class="message-content">
-                        <p>{{ message }}</p>
-                        <p class="timestamp">{{ ts }}</p>
-                    </div>
-                </div>
                 <form class="input-area current-container" action ="/" method= "POST">
-                    <input type="text" name='message' placeholder="Type your message...">
+                    <input type="text" name='message' placeholder="{{input_message}}">
                     <input type="submit" value="Send">
                 </form>
-            </div>
+            </div>  </div>  </div>
         </body>
     </html>
     """
-    print("Messages:", messages)
-    return render_template_string(html, name=name, message=user_message, messages=messages) 
+    return render_template_string(html, name=name,messages=messages, input_message=user_message) 
 
 
 if __name__ == "__main__":
