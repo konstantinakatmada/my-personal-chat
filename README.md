@@ -29,6 +29,10 @@ This chat application is specifically designed for personal use, enabling anyone
 
 The server.py file acts as the main Flask application file, handling the backend functionality and routing. All HTML and CSS code is contained within this file, eliminating the need for separate template or static files.
 
+## Goal and Use Case
+
+The purpose of this project was to buiild the basics of a another chat that I am buiding right now, a personal chat using the ChatGPT API. Thisprovides a personal chat environment that will enable the user to have conversations with ChatGPT even when ChatGPT overloads or crashes.
+
 ## Contributing
 
 Contributions, suggestions, and improvements are always welcome! If you have any ideas to enhance this project, please feel free to open an issue or submit a pull request.
